@@ -33,7 +33,6 @@ class _ProductManagerState extends State<ProductManager> {
 
   void _deleteProduct(int index) {
     setState(() {
-      print(_products);
       _products.removeAt(index);
     });
   }
