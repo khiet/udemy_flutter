@@ -22,7 +22,7 @@ class Products extends StatelessWidget {
                 onPressed: () => Navigator.push<bool>(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ProductPage(
+                        builder: (BuildContext context) => ProductPage(
                             products[index]['title'], products[index]['image']),
                       ),
                     ).then((bool value) {
