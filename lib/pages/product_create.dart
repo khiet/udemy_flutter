@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class ProductCreatePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _ProductCreatePage();
+    return _ProductCreatePageState();
   }
 }
 
-class _ProductCreatePage extends State<ProductCreatePage> {
-  String _titleValue = '';
+class _ProductCreatePageState extends State<ProductCreatePage> {
+  String titleValue = '';
+  String descriptionValue = '';
+  double priceValue = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +19,26 @@ class _ProductCreatePage extends State<ProductCreatePage> {
         TextField(
           onChanged: (String value) {
             setState(() {
-              _titleValue = value;
+              titleValue = value;
             });
           },
         ),
-        Text(_titleValue),
+        TextField(
+          maxLines: 4,
+          onChanged: (String value) {
+            setState(() {
+              descriptionValue = value;
+            });
+          },
+        ),
+        TextField(
+          keyboardType: TextInputType.number,
+          onChanged: (String value) {
+            setState(() {
+              priceValue = double.parse(value);
+            });
+          },
+        )
       ],
     );
   }
