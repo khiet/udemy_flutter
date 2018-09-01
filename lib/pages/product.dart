@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import '../widgets/ui_elements/title_default.dart';
+
 class ProductPage extends StatelessWidget {
   final String title;
   final String imageUrl;
@@ -26,14 +28,7 @@ class ProductPage extends StatelessWidget {
             Image.asset(imageUrl),
             Container(
               padding: EdgeInsets.all(10.0),
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: 26.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Oswald',
-                ),
-              ),
+              child: TitleDefault(title),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
