@@ -15,6 +15,5 @@ class TitleDefault extends StatelessWidget {
         fontFamily: 'Oswald',
       ),
     );
-    ;
   }
 }
