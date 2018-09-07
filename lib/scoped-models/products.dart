@@ -39,4 +39,16 @@ class ProductsModel extends Model {
   void setSelectedProduct(int index) {
     _selectedProductIndex = index;
   }
+
+  void toggleProductFavouriteStatus() {
+    final Product newProduct = Product(
+        title: selectedProduct.title,
+        description: selectedProduct.description,
+        price: selectedProduct.price,
+        image: selectedProduct.image,
+        isFavourite: !selectedProduct.isFavourite);
+    updateProduct(newProduct);
+
+    notifyListeners();
+  }
 }
