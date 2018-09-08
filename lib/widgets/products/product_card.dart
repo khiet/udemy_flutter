@@ -43,7 +43,7 @@ class ProductCard extends StatelessWidget {
           builder: (BuildContext context, Widget child, MainModel model) {
             return IconButton(
               icon: Icon(
-                model.products[productIndex].isFavourite
+                model.allProducts[productIndex].isFavourite
                     ? Icons.favorite
                     : Icons.favorite_border,
               ),
@@ -71,7 +71,7 @@ class ProductCard extends StatelessWidget {
           ),
           PriceTag(
             product.price.toString(),
-          ),
+          )
         ],
       ),
     );
