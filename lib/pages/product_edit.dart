@@ -28,7 +28,7 @@ class _ProductCreatePageState extends State<ProductEditPage> {
         final Widget pageContent =
             _buildPageContent(context, model.selectedProduct);
 
-        return (model.selectedProductIndex == null)
+        return (model.selectedProductIndex == -1)
             ? pageContent
             : Scaffold(
                 appBar: AppBar(
@@ -154,7 +154,7 @@ class _ProductCreatePageState extends State<ProductEditPage> {
     }
     _formKey.currentState.save();
 
-    if (selectedProductIndex == null) {
+    if (selectedProductIndex == -1) {
       addProduct(
         _formData['title'],
         _formData['description'],
