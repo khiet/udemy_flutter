@@ -20,20 +20,26 @@ class ConnectedProductsModel extends Model {
       'price': price
     };
 
-    http.post(
+    http
+        .post(
       'https://udemiy-flutter.firebaseio.com/products.json',
       body: json.encode(productData),
-    );
+    )
+        .then((http.Response response) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      print(responseData);
 
-    final Product newProduct = Product(
-        title: title,
-        description: description,
-        image: image,
-        price: price,
-        userEmail: _authenticatedUser.email,
-        userId: _authenticatedUser.id);
-    _products.add(newProduct);
-    notifyListeners();
+      final Product newProduct = Product(
+          id: responseData['name'],
+          title: title,
+          description: description,
+          image: image,
+          price: price,
+          userEmail: _authenticatedUser.email,
+          userId: _authenticatedUser.id);
+      _products.add(newProduct);
+      notifyListeners();
+    });
   }
 }
 
