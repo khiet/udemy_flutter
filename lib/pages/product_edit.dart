@@ -174,7 +174,6 @@ class _ProductCreatePageState extends State<ProductEditPage> {
         Navigator.pushReplacementNamed(context, '/products')
             .then((_) => setSelectedProduct(null));
       });
-      ;
     }
   }
 }
