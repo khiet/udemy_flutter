@@ -15,6 +15,26 @@ class ConnectedProductsModel extends Model {
         .get('https://udemiy-flutter.firebaseio.com/products.json')
         .then((http.Response response) {
       print(json.decode(response.body));
+      final Map<String, dynamic> productListData = json.decode(response.body);
+
+      final List<Product> fetchedProductList = [];
+
+      productListData.forEach((String productId, dynamic productData) {
+        final Product product = Product(
+          id: productId,
+          title: productData['title'],
+          description: productData['description'],
+          price: productData['price'],
+          image: productData['image'],
+          userEmail: productData['userEmail'],
+          userId: productData['userId'],
+        );
+
+        fetchedProductList.add(product);
+      });
+
+      _products = fetchedProductList;
+      notifyListeners();
     });
   }
 
@@ -25,7 +45,9 @@ class ConnectedProductsModel extends Model {
       'description': description,
       'image':
           'https://s3.amazonaws.com/cdn.johnandkiras.com/images/large/chocolate_figs_12pc-1.jpg',
-      'price': price
+      'price': price,
+      'userEmail': _authenticatedUser.email,
+      'userId': _authenticatedUser.id
     };
 
     http
@@ -36,13 +58,14 @@ class ConnectedProductsModel extends Model {
       print(responseData);
 
       final Product newProduct = Product(
-          id: responseData['name'],
-          title: title,
-          description: description,
-          image: image,
-          price: price,
-          userEmail: _authenticatedUser.email,
-          userId: _authenticatedUser.id);
+        id: responseData['name'],
+        title: title,
+        description: description,
+        image: image,
+        price: price,
+        userEmail: _authenticatedUser.email,
+        userId: _authenticatedUser.id,
+      );
       _products.add(newProduct);
       notifyListeners();
     });
