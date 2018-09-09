@@ -4,22 +4,23 @@ import 'package:scoped_model/scoped_model.dart';
 import './product_edit.dart';
 import '../scoped-models/main.dart';
 
-class ProductListPage extends StatelessWidget {
-  Widget _buildEditButton(BuildContext context, int index, MainModel model) {
-    return IconButton(
-      icon: Icon(Icons.edit),
-      onPressed: () {
-        model.selectProduct(index);
+class ProductListPage extends StatefulWidget {
+  final MainModel model;
 
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (BuildContext context) {
-              return ProductEditPage();
-            },
-          ),
-        );
-      },
-    );
+  ProductListPage(this.model);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _ProductListPageState();
+  }
+}
+
+class _ProductListPageState extends State<ProductListPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    widget.model.fetchProducts();
   }
 
   @override
@@ -59,6 +60,23 @@ class ProductListPage extends StatelessWidget {
             );
           },
           itemCount: model.allProducts.length,
+        );
+      },
+    );
+  }
+
+  Widget _buildEditButton(BuildContext context, int index, MainModel model) {
+    return IconButton(
+      icon: Icon(Icons.edit),
+      onPressed: () {
+        model.selectProduct(index);
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return ProductEditPage();
+            },
+          ),
         );
       },
     );
