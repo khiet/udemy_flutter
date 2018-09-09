@@ -10,6 +10,14 @@ class ConnectedProductsModel extends Model {
   int _selProductIndex;
   User _authenticatedUser;
 
+  void fetchProducts() {
+    http
+        .get('https://udemiy-flutter.firebaseio.com/products.json')
+        .then((http.Response response) {
+      print(json.decode(response.body));
+    });
+  }
+
   void addProduct(
       String title, String description, double price, String image) {
     final Map<String, dynamic> productData = {
@@ -21,10 +29,8 @@ class ConnectedProductsModel extends Model {
     };
 
     http
-        .post(
-      'https://udemiy-flutter.firebaseio.com/products.json',
-      body: json.encode(productData),
-    )
+        .post('https://udemiy-flutter.firebaseio.com/products.json',
+            body: json.encode(productData))
         .then((http.Response response) {
       final Map<String, dynamic> responseData = json.decode(response.body);
       print(responseData);
