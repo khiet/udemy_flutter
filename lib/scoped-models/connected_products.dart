@@ -12,11 +12,11 @@ class ConnectedProductsModel extends Model {
   User _authenticatedUser;
   bool _isLoading = false;
 
-  void fetchProducts() {
+  Future<Null> fetchProducts() {
     _isLoading = true;
     notifyListeners();
 
-    http
+    return http
         .get('https://udemiy-flutter.firebaseio.com/products.json')
         .then((http.Response response) {
       final Map<String, dynamic> productListData = json.decode(response.body);
