@@ -52,6 +52,7 @@ class ConnectedProductsModel extends Model {
 
       _isLoading = false;
       notifyListeners();
+      _selProductId = null;
     });
   }
 
