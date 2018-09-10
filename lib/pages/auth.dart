@@ -3,6 +3,11 @@ import 'package:scoped_model/scoped_model.dart';
 
 import '../scoped-models/main.dart';
 
+enum AuthMode {
+  Signup,
+  Login,
+}
+
 class AuthPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -18,6 +23,8 @@ class _AuthPageState extends State<AuthPage> {
   };
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _passwordTextController = TextEditingController();
+  AuthMode _authMode = AuthMode.Login;
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +53,23 @@ class _AuthPageState extends State<AuthPage> {
                       height: 10.0,
                     ),
                     _buildPasswordTextField(),
-                    _buildAcceptSwitch(),
                     SizedBox(
                       height: 10.0,
+                    ),
+                    _authMode == AuthMode.Signup
+                        ? _buildPasswordConfirmTextField()
+                        : Container(),
+                    _buildAcceptSwitch(),
+                    FlatButton(
+                      child: Text(
+                          'Switch to ${_authMode == AuthMode.Login ? 'Signup' : 'Login'}'),
+                      onPressed: () {
+                        setState(() {
+                          _authMode = (_authMode == AuthMode.Login)
+                              ? AuthMode.Signup
+                              : AuthMode.Login;
+                        });
+                      },
                     ),
                     ScopedModelDescendant<MainModel>(
                       builder: (BuildContext context, Widget child,
@@ -100,6 +121,7 @@ class _AuthPageState extends State<AuthPage> {
           return 'Password invalid';
         }
       },
+      controller: _passwordTextController,
       decoration: InputDecoration(
         labelText: 'Password',
         filled: true,
@@ -128,6 +150,25 @@ class _AuthPageState extends State<AuthPage> {
       ),
       onSaved: (String value) {
         _formData['email'] = value;
+      },
+    );
+  }
+
+  Widget _buildPasswordConfirmTextField() {
+    return TextFormField(
+      obscureText: true,
+      validator: (String value) {
+        if (_passwordTextController.text != value) {
+          return 'Password do not match';
+        }
+      },
+      decoration: InputDecoration(
+        labelText: 'Confirm Password',
+        filled: true,
+        fillColor: Colors.white,
+      ),
+      onSaved: (String value) {
+        _formData['password'] = value;
       },
     );
   }
