@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import '../models/product.dart';
 import '../models/user.dart';
+import '../models/auth.dart';
 
 class ConnectedProductsModel extends Model {
   List<Product> _products = [];
@@ -231,17 +232,23 @@ class ProductsModel extends ConnectedProductsModel {
 }
 
 class UserModel extends ConnectedProductsModel {
-  Future<Map<String, dynamic>> login(String email, String password) async {
+  Future<Map<String, dynamic>> authenticate(String email, String password,
+      [AuthMode mode = AuthMode.Login]) async {
     _isLoading = true;
     notifyListeners();
+
     final Map<String, dynamic> authData = {
       'email': email,
       'password': password,
       'returnSecureToken': true
     };
 
+    final String authUrl = (mode == AuthMode.Login)
+        ? 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyA_T9yBuYx19vbbzakD4cjmXcNMwh0BpZE'
+        : 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyA_T9yBuYx19vbbzakD4cjmXcNMwh0BpZE';
+
     final http.Response response = await http.post(
-      'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyA_T9yBuYx19vbbzakD4cjmXcNMwh0BpZE',
+      authUrl,
       body: json.encode(authData),
       headers: {'Content-Type': 'application/json'},
     );
@@ -257,35 +264,6 @@ class UserModel extends ConnectedProductsModel {
       message = 'This email was not found.';
     } else if (responseData['error']['message'] == 'INVALID_PASSWORD') {
       message = 'This password is invalid.';
-    }
-
-    _isLoading = false;
-    notifyListeners();
-    return {'success': !hasError, 'message': message};
-  }
-
-  Future<Map<String, dynamic>> signup(String email, String password) async {
-    _isLoading = true;
-    notifyListeners();
-    final Map<String, dynamic> authData = {
-      'email': email,
-      'password': password,
-      'returnSecureToken': true
-    };
-
-    final http.Response response = await http.post(
-      'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyA_T9yBuYx19vbbzakD4cjmXcNMwh0BpZE',
-      body: json.encode(authData),
-      headers: {'Content-Type': 'application/json'},
-    );
-
-    final Map<String, dynamic> responseData = json.decode(response.body);
-    String message = 'Something went wrong.';
-    bool hasError = true;
-
-    if (responseData.containsKey('idToken')) {
-      hasError = false;
-      message = 'Authentication succeeded!';
     } else if (responseData['error']['message'] == 'EMAIL_EXISTS') {
       message = 'This email already exists.';
     }
