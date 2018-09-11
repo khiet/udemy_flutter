@@ -108,6 +108,22 @@ class _AuthPageState extends State<AuthPage> {
 
       if (successInformation['success']) {
         Navigator.pushReplacementNamed(context, '/products');
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('An Error Occurred!'),
+              content: Text(successInformation['message']),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Okey'),
+                )
+              ],
+            );
+          },
+        );
       }
     }
   }

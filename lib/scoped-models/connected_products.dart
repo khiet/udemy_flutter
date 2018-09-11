@@ -247,8 +247,19 @@ class UserModel extends ConnectedProductsModel {
       body: json.encode(authData),
       headers: {'Content-Type': 'application/json'},
     );
-    print(json.decode(response.body));
-    return {'success': true, 'message': 'foo'};
+
+    final Map<String, dynamic> responseData = json.decode(response.body);
+    String message = 'Something went wrong.';
+    bool hasError = true;
+
+    if (responseData.containsKey('idToken')) {
+      hasError = false;
+      message = 'Authentication succeeded!';
+    } else if (responseData['error']['message'] == 'EMAIL_EXISTS') {
+      message = 'This email already exists.';
+    }
+
+    return {'success': !hasError, 'message': message};
   }
 }
 
