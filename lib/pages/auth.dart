@@ -33,7 +33,7 @@ class _AuthPageState extends State<AuthPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: Text('${_authMode == AuthMode.Login ? 'Login' : 'Signup'}'),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -76,8 +76,10 @@ class _AuthPageState extends State<AuthPage> {
                           MainModel model) {
                         return RaisedButton(
                           textColor: Colors.white,
-                          child: Text('LOGIN'),
-                          onPressed: () => _submitForm(model.login),
+                          child: Text(
+                              '${_authMode == AuthMode.Login ? 'LOGIN' : 'SIGNUP'}'),
+                          onPressed: () =>
+                              _submitForm(model.login, model.signup),
                         );
                       },
                     )
@@ -91,14 +93,23 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
-  void _submitForm(Function login) {
+  void _submitForm(Function login, Function signup) async {
     if (!_formKey.currentState.validate() || !_formData['acceptTerms']) {
       return;
     }
-    _formKey.currentState.save();
 
-    login(_formData['email'], _formData['password']);
-    Navigator.pushReplacementNamed(context, '/products');
+    _formKey.currentState.save();
+    if (_authMode == AuthMode.Login) {
+      login(_formData['email'], _formData['password']);
+      Navigator.pushReplacementNamed(context, '/products');
+    } else {
+      Map<String, dynamic> successInformation =
+          await signup(_formData['email'], _formData['password']);
+
+      if (successInformation['success']) {
+        Navigator.pushReplacementNamed(context, '/products');
+      }
+    }
   }
 
   Widget _buildAcceptSwitch() {
@@ -167,9 +178,6 @@ class _AuthPageState extends State<AuthPage> {
         filled: true,
         fillColor: Colors.white,
       ),
-      onSaved: (String value) {
-        _formData['password'] = value;
-      },
     );
   }
 
