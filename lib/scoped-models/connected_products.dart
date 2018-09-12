@@ -343,9 +343,9 @@ class UserModel extends ConnectedProductsModel {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.getString('token');
     final String expiryTimeString = prefs.getString('expiryTime');
-    final DateTime parsedExpiryTime = DateTime.parse(expiryTimeString);
     if (token != null) {
       final DateTime now = DateTime.now();
+      final DateTime parsedExpiryTime = DateTime.parse(expiryTimeString);
       if (parsedExpiryTime.isBefore(now)) {
         _authenticatedUser = null;
         notifyListeners();
