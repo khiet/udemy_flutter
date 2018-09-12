@@ -206,10 +206,32 @@ class ProductsModel extends ConnectedProductsModel {
     });
   }
 
-  void toggleProductFavouriteStatus() {
+  void toggleProductFavouriteStatus() async {
     final bool isCurrentlyFavorite = selectedProduct.isFavourite;
     final bool newFavoriteStatus = !isCurrentlyFavorite;
-    final Product updatedProduct = Product(
+    Product updatedProduct = Product(
+      id: selectedProduct.id,
+      title: selectedProduct.title,
+      description: selectedProduct.description,
+      price: selectedProduct.price,
+      image: selectedProduct.image,
+      userEmail: selectedProduct.userEmail,
+      userId: selectedProduct.userId,
+      isFavourite: newFavoriteStatus,
+    );
+
+    http.Response response;
+    if (newFavoriteStatus) {
+      response = await http.put(
+          'https://udemiy-flutter.firebaseio.com/products/${selectedProduct.id}/wishlistUsers/${_authenticatedUser.id}.json?auth=${_authenticatedUser.token}',
+          body: json.encode(true));
+    } else {
+      response = await http.delete(
+          'https://udemiy-flutter.firebaseio.com/products/${selectedProduct.id}/wishlistUsers/${_authenticatedUser.id}.json?auth=${_authenticatedUser.token}');
+    }
+
+    if (response.statusCode != 200 && response.statusCode != 201) {
+      updatedProduct = Product(
         id: selectedProduct.id,
         title: selectedProduct.title,
         description: selectedProduct.description,
@@ -217,7 +239,9 @@ class ProductsModel extends ConnectedProductsModel {
         image: selectedProduct.image,
         userEmail: selectedProduct.userEmail,
         userId: selectedProduct.userId,
-        isFavourite: newFavoriteStatus);
+        isFavourite: !newFavoriteStatus,
+      );
+    }
 
     _products[selectedProductIndex] = updatedProduct;
     notifyListeners();
