@@ -71,6 +71,11 @@ class ProductsModel extends ConnectedProductsModel {
       }
 
       productListData.forEach((String productId, dynamic productData) {
+        final bool isFavourite = ((productData['wishlistUsers'] == null)
+            ? false
+            : (productData['wishlistUsers'] as Map<String, dynamic>)
+                .containsKey(_authenticatedUser.id));
+
         final Product product = Product(
           id: productId,
           title: productData['title'],
@@ -79,6 +84,7 @@ class ProductsModel extends ConnectedProductsModel {
           image: productData['image'],
           userEmail: productData['userEmail'],
           userId: productData['userId'],
+          isFavourite: isFavourite,
         );
 
         fetchedProductList.add(product);
