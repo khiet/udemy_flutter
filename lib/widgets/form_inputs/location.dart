@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:map_view/map_view.dart';
+import 'package:http/http.dart' as http;
 
 class LocationInput extends StatefulWidget {
   @override
@@ -11,11 +13,11 @@ class LocationInput extends StatefulWidget {
 class _LocationInputState extends State<LocationInput> {
   Uri _staticMapUri;
   final FocusNode _addressInputFocusNode = FocusNode();
+  final TextEditingController _addressInputcontroller = TextEditingController();
 
   @override
   void initState() {
     _addressInputFocusNode.addListener(_updateLocation);
-    getStaticMap();
     super.initState();
   }
 
@@ -25,15 +27,33 @@ class _LocationInputState extends State<LocationInput> {
     super.dispose();
   }
 
-  void getStaticMap() {
+  void getStaticMap(String address) async {
+    if (address.isEmpty) {
+      return;
+    }
+
+    // https://developers.google.com/maps/documentation/geocoding/intro
+    final Uri rui = Uri.https(
+      'maps.googleapis.com',
+      '/maps/api/geocode/json',
+      {'address': address, 'key': 'AIzaSyDc72LQ1Qsa72z6Xg8dWb59aCg9_jEIqwA'},
+    );
+
+    final http.Response response = await http.get(rui);
+    final decodedResponse = json.decode(response.body);
+    final formattedAddress = decodedResponse['results'][0]['formatted_address'];
+    final coords = decodedResponse['results'][0]['geometry']['location'];
+
+    print(decodedResponse);
+
     final StaticMapProvider staticMapViewProvider =
         StaticMapProvider('AIzaSyDc72LQ1Qsa72z6Xg8dWb59aCg9_jEIqwA');
 
     final Uri staticMapUri = staticMapViewProvider.getStaticUriWithMarkers(
       [
-        Marker('position', 'Position', 41.40338, 2.17403),
+        Marker('position', 'Position', coords['lat'], coords['lng']),
       ],
-      center: Location(41.40338, 2.17403),
+      center: Location(coords['lat'], coords['lng']),
       width: 500,
       height: 300,
       maptype: StaticMapViewType.roadmap,
@@ -41,11 +61,14 @@ class _LocationInputState extends State<LocationInput> {
 
     setState(() {
       _staticMapUri = staticMapUri;
+      _addressInputcontroller.text = formattedAddress;
     });
   }
 
   void _updateLocation() {
-    print('_updateLocation');
+    if (!_addressInputFocusNode.hasFocus) {
+      getStaticMap(_addressInputcontroller.text);
+    }
   }
 
   @override
@@ -54,6 +77,10 @@ class _LocationInputState extends State<LocationInput> {
       children: <Widget>[
         TextFormField(
           focusNode: _addressInputFocusNode,
+          controller: _addressInputcontroller,
+          decoration: InputDecoration(
+            labelText: 'Address',
+          ),
         ),
         SizedBox(
           height: 10.0,
