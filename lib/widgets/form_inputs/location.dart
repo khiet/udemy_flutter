@@ -116,7 +116,7 @@ class _LocationInputState extends State<LocationInput> {
 
     final Uri staticMapUri = staticMapViewProvider.getStaticUriWithMarkers(
       [
-        Marker('position', 'Position', _locationData.latitude,
+        Marker('position', _locationData.address, _locationData.latitude,
             _locationData.longitude),
       ],
       center: Location(_locationData.latitude, _locationData.longitude),
