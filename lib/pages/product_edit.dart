@@ -66,7 +66,7 @@ class _ProductCreatePageState extends State<ProductEditPage> {
               SizedBox(
                 height: 10.0,
               ),
-              LocationInput(_setLocation),
+              LocationInput(_setLocation, product),
               SizedBox(
                 height: 10.0,
               ),
@@ -200,6 +200,7 @@ class _ProductCreatePageState extends State<ProductEditPage> {
         _formData['description'],
         _formData['price'],
         _formData['image'],
+        _formData['location'],
       ).then((_) {
         Navigator.pushReplacementNamed(context, '/')
             .then((_) => setSelectedProduct(null));

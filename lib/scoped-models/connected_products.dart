@@ -83,6 +83,11 @@ class ProductsModel extends ConnectedProductsModel {
           description: productData['description'],
           price: productData['price'],
           image: productData['image'],
+          location: LocationData(
+            latitude: productData['loc_lat'],
+            longitude: productData['loc_lng'],
+            address: productData['loc_address'],
+          ),
           userEmail: productData['userEmail'],
           userId: productData['userId'],
           isFavourite: isFavourite,
@@ -143,6 +148,7 @@ class ProductsModel extends ConnectedProductsModel {
         description: description,
         image: image,
         price: price,
+        location: locData,
         userEmail: _authenticatedUser.email,
         userId: _authenticatedUser.id,
       );
