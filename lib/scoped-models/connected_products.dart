@@ -164,8 +164,8 @@ class ProductsModel extends ConnectedProductsModel {
     }
   }
 
-  Future<bool> updateProduct(
-      String title, String description, double price, String image) {
+  Future<bool> updateProduct(String title, String description, double price,
+      String image, LocationData locData) {
     _isLoading = true;
     notifyListeners();
 
@@ -175,6 +175,9 @@ class ProductsModel extends ConnectedProductsModel {
       'image':
           'https://s3.amazonaws.com/cdn.johnandkiras.com/images/large/chocolate_figs_12pc-1.jpg',
       'price': price,
+      'loc_lat': locData.latitude,
+      'loc_lng': locData.longitude,
+      'loc_address': locData.address,
       'userEmail': selectedProduct.userEmail,
       'userId': selectedProduct.userId,
     };
@@ -191,6 +194,7 @@ class ProductsModel extends ConnectedProductsModel {
         description: description,
         image: image,
         price: price,
+        location: locData,
         userEmail: selectedProduct.userEmail,
         userId: selectedProduct.userId,
       );
@@ -234,6 +238,7 @@ class ProductsModel extends ConnectedProductsModel {
       title: selectedProduct.title,
       description: selectedProduct.description,
       price: selectedProduct.price,
+      location: selectedProduct.location,
       image: selectedProduct.image,
       userEmail: selectedProduct.userEmail,
       userId: selectedProduct.userId,
@@ -256,6 +261,7 @@ class ProductsModel extends ConnectedProductsModel {
         title: selectedProduct.title,
         description: selectedProduct.description,
         price: selectedProduct.price,
+        location: selectedProduct.location,
         image: selectedProduct.image,
         userEmail: selectedProduct.userEmail,
         userId: selectedProduct.userId,

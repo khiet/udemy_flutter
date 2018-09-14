@@ -4,25 +4,34 @@
       "description": "Disco 606 XYZ",
       "image": "https://s3.amazonaws.com/cdn.johnandkiras.com/images/large/chocolate_figs_12pc-1.jpg",
       "price": 123.0,
+      "loc_address": "Osaka, Osaka Prefecture, Japan",
+      "loc_lat": 34.6937378,
+      "loc_lng": 135.5021651,
       "title": "Chocolate",
       "userEmail": "khiet@root.com",
-      "userId": "id"
+      "userId": "nlUjbvS5OTPtJJHJadgaxrWU0r42"
     },
     "-LLyRiMbJusnjeqZSXST": {
       "description": "Chilling Ice",
       "image": "https://s3.amazonaws.com/cdn.johnandkiras.com/images/large/chocolate_figs_12pc-1.jpg",
       "price": 321.0,
+      "loc_address": "Osaka, Osaka Prefecture, Japan",
+      "loc_lat": 34.6937378,
+      "loc_lng": 135.5021651,
       "title": "Wonderful Ice",
       "userEmail": "khiet@root.com",
-      "userId": "id"
+      "userId": "nlUjbvS5OTPtJJHJadgaxrWU0r42"
     },
     "-LLzEIyZXrm_QTlQfRVk": {
       "description": "Steve Jobs’s Product",
       "image": "https://s3.amazonaws.com/cdn.johnandkiras.com/images/large/chocolate_figs_12pc-1.jpg",
       "price": 200.0,
+      "loc_address": "Osaka, Osaka Prefecture, Japan",
+      "loc_lat": 34.6937378,
+      "loc_lng": 135.5021651,
       "title": "iPhone S6",
       "userEmail": "khiet@root.com",
-      "userId": "id"
+      "userId": "3DKYY82HgPhF2w0eF3EiJBpFRM22"
     }
   }
 }
