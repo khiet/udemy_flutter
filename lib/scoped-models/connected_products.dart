@@ -8,6 +8,7 @@ import 'package:rxdart/subjects.dart';
 import '../models/product.dart';
 import '../models/user.dart';
 import '../models/auth.dart';
+import '../models/location.dart';
 
 class ConnectedProductsModel extends Model {
   List<Product> _products = [];
@@ -106,8 +107,8 @@ class ProductsModel extends ConnectedProductsModel {
     });
   }
 
-  Future<bool> addProduct(
-      String title, String description, double price, String image) async {
+  Future<bool> addProduct(String title, String description, double price,
+      String image, LocationData locData) async {
     _isLoading = true;
     notifyListeners();
     final Map<String, dynamic> productData = {
@@ -117,7 +118,10 @@ class ProductsModel extends ConnectedProductsModel {
           'https://s3.amazonaws.com/cdn.johnandkiras.com/images/large/chocolate_figs_12pc-1.jpg',
       'price': price,
       'userEmail': _authenticatedUser.email,
-      'userId': _authenticatedUser.id
+      'userId': _authenticatedUser.id,
+      'loc_lat': locData.latitude,
+      'loc_lng': locData.longitude,
+      'loc_address': locData.address
     };
 
     try {
