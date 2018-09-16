@@ -85,7 +85,8 @@ class ProductsModel extends ConnectedProductsModel {
           title: productData['title'],
           description: productData['description'],
           price: productData['price'],
-          image: productData['image'],
+          image: productData['imageUrl'],
+          imagePath: productData['imagePath'],
           location: LocationData(
             latitude: productData['loc_lat'],
             longitude: productData['loc_lng'],
@@ -171,8 +172,6 @@ class ProductsModel extends ConnectedProductsModel {
     final Map<String, dynamic> productData = {
       'title': title,
       'description': description,
-      'image':
-          'https://s3.amazonaws.com/cdn.johnandkiras.com/images/large/chocolate_figs_12pc-1.jpg',
       'imagePath': uploadData['imagePath'],
       'imageUrl': uploadData['imageUrl'],
       'price': price,
@@ -201,6 +200,7 @@ class ProductsModel extends ConnectedProductsModel {
         title: title,
         description: description,
         image: uploadData['imageUrl'],
+        imagePath: uploadData['imagePath'],
         price: price,
         location: locData,
         userEmail: _authenticatedUser.email,
@@ -295,6 +295,7 @@ class ProductsModel extends ConnectedProductsModel {
       price: selectedProduct.price,
       location: selectedProduct.location,
       image: selectedProduct.image,
+      imagePath: selectedProduct.imagePath,
       userEmail: selectedProduct.userEmail,
       userId: selectedProduct.userId,
       isFavourite: newFavoriteStatus,
@@ -318,6 +319,7 @@ class ProductsModel extends ConnectedProductsModel {
         price: selectedProduct.price,
         location: selectedProduct.location,
         image: selectedProduct.image,
+        imagePath: selectedProduct.imagePath,
         userEmail: selectedProduct.userEmail,
         userId: selectedProduct.userId,
         isFavourite: !newFavoriteStatus,
