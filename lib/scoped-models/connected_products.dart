@@ -299,6 +299,7 @@ class ProductsModel extends ConnectedProductsModel {
   }
 
   void toggleProductFavouriteStatus() async {
+    print('toggleProductFavouriteStatus $selectedProduct.id');
     final bool isCurrentlyFavorite = selectedProduct.isFavourite;
     final bool newFavoriteStatus = !isCurrentlyFavorite;
     Product updatedProduct = Product(
@@ -344,6 +345,7 @@ class ProductsModel extends ConnectedProductsModel {
   }
 
   void selectProduct(String productId) {
+    print('selectProduct $productId');
     _selProductId = productId;
     if (productId != null) {
       notifyListeners();
