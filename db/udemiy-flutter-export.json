@@ -1,37 +1,40 @@
 {
   "products": {
-    "-LLyRbl0gdYfPmrppzBv": {
-      "description": "Disco 606 XYZ",
-      "image": "https://s3.amazonaws.com/cdn.johnandkiras.com/images/large/chocolate_figs_12pc-1.jpg",
+    "-LMY0iwvPY-4JICWuz2b": {
+      "description": "iPhone is a smart phone.",
+      "imagePath": "images/cde7a00a-32e6-4bbe-acc4-c6b262d33859-image_picker_01153108-D02B-4731-8AA3-D67823DDEE52-6716-00000658CFC89D96.jpg",
+      "imageUrl": "https://firebasestorage.googleapis.com/v0/b/udemiy-flutter.appspot.com/o/images%2Fcde7a00a-32e6-4bbe-acc4-c6b262d33859-image_picker_01153108-D02B-4731-8AA3-D67823DDEE52-6716-00000658CFC89D96.jpg?alt=media&token=cde7a00a-32e6-4bbe-acc4-c6b262d33859",
+      "loc_address": "London, UK",
+      "loc_lat": 51.5073509,
+      "loc_lng": -0.1277583,
+      "price": 100.0,
+      "title": "iPhone",
+      "userEmail": "khiet@root.com",
+      "userId": "nlUjbvS5OTPtJJHJadgaxrWU0r42"
+    },
+    "-LMY0s2iijNV7LTIMJT1": {
+      "description": "iPad is a tablet computer",
+      "imagePath": "images/c72beb20-5a1a-492a-8b23-7f05103491c8-image_picker_125DA385-FAEF-405C-9C87-805649FED0A4-6716-0000067533A1216D.jpg",
+      "imageUrl": "https://firebasestorage.googleapis.com/v0/b/udemiy-flutter.appspot.com/o/images%2Fc72beb20-5a1a-492a-8b23-7f05103491c8-image_picker_125DA385-FAEF-405C-9C87-805649FED0A4-6716-0000067533A1216D.jpg?alt=media&token=c72beb20-5a1a-492a-8b23-7f05103491c8",
+      "loc_address": "1 Stockton St, San Francisco, CA 94108, USA",
+      "loc_lat": 37.78586,
+      "loc_lng": -122.4065081,
       "price": 123.0,
-      "loc_address": "Osaka, Osaka Prefecture, Japan",
-      "loc_lat": 34.6937378,
-      "loc_lng": 135.5021651,
-      "title": "Chocolate",
+      "title": "iPad",
       "userEmail": "khiet@root.com",
       "userId": "nlUjbvS5OTPtJJHJadgaxrWU0r42"
     },
-    "-LLyRiMbJusnjeqZSXST": {
-      "description": "Chilling Ice",
-      "image": "https://s3.amazonaws.com/cdn.johnandkiras.com/images/large/chocolate_figs_12pc-1.jpg",
-      "price": 321.0,
-      "loc_address": "Osaka, Osaka Prefecture, Japan",
-      "loc_lat": 34.6937378,
-      "loc_lng": 135.5021651,
-      "title": "Wonderful Ice",
+    "-LMY1M9LODl4XF-dpJNn": {
+      "description": "Mac OS is the Operating System.",
+      "imagePath": "images/8f44f852-95a1-453b-96f1-7b707548730a-image_picker_08BBF35B-F7D5-419E-930A-9BA87AAD003E-8359-00000695649DD2BE.jpg",
+      "imageUrl": "https://firebasestorage.googleapis.com/v0/b/udemiy-flutter.appspot.com/o/images%2F8f44f852-95a1-453b-96f1-7b707548730a-image_picker_08BBF35B-F7D5-419E-930A-9BA87AAD003E-8359-00000695649DD2BE.jpg?alt=media&token=8f44f852-95a1-453b-96f1-7b707548730a",
+      "loc_address": "New York, NY, USA",
+      "loc_lat": 40.7127753,
+      "loc_lng": -74.0059728,
+      "price": 1111.0,
+      "title": "Mac OS",
       "userEmail": "khiet@root.com",
       "userId": "nlUjbvS5OTPtJJHJadgaxrWU0r42"
-    },
-    "-LLzEIyZXrm_QTlQfRVk": {
-      "description": "Steve Jobs’s Product",
-      "image": "https://s3.amazonaws.com/cdn.johnandkiras.com/images/large/chocolate_figs_12pc-1.jpg",
-      "price": 200.0,
-      "loc_address": "Osaka, Osaka Prefecture, Japan",
-      "loc_lat": 34.6937378,
-      "loc_lng": 135.5021651,
-      "title": "iPhone S6",
-      "userEmail": "khiet@root.com",
-      "userId": "3DKYY82HgPhF2w0eF3EiJBpFRM22"
     }
   }
 }
