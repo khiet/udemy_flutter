@@ -219,15 +219,27 @@ class ProductsModel extends ConnectedProductsModel {
   }
 
   Future<bool> updateProduct(String title, String description, double price,
-      File image, LocationData locData) {
+      File image, LocationData locData) async {
     _isLoading = true;
     notifyListeners();
+
+    String imageUrl = selectedProduct.image;
+    String imagePath = selectedProduct.imagePath;
+    if (image != null) {
+      final Map<String, dynamic> uploadData = await uploadImage(image);
+      if (uploadData == null) {
+        return false;
+      }
+
+      imageUrl = uploadData['imageUrl'];
+      imagePath = uploadData['imagePath'];
+    }
 
     final Map<String, dynamic> updateData = {
       'title': title,
       'description': description,
-      'image':
-          'https://s3.amazonaws.com/cdn.johnandkiras.com/images/large/chocolate_figs_12pc-1.jpg',
+      'imagePath': imagePath,
+      'imageUrl': imageUrl,
       'price': price,
       'loc_lat': locData.latitude,
       'loc_lng': locData.longitude,
@@ -236,18 +248,19 @@ class ProductsModel extends ConnectedProductsModel {
       'userId': selectedProduct.userId,
     };
 
-    return http
-        .put(
-            'https://udemiy-flutter.firebaseio.com/products/${selectedProduct.id}.json?auth=${_authenticatedUser.token}',
-            body: json.encode(updateData))
-        .then((http.Response response) {
+    try {
+      final http.Response response = await http.put(
+        'https://udemiy-flutter.firebaseio.com/products/${selectedProduct.id}.json?auth=${_authenticatedUser.token}',
+        body: json.encode(updateData),
+      );
+
       _isLoading = false;
       final Product updatedProduct = Product(
         id: selectedProduct.id,
         title: title,
         description: description,
-        image:
-            'https://s3.amazonaws.com/cdn.johnandkiras.com/images/large/chocolate_figs_12pc-1.jpg',
+        image: imageUrl,
+        imagePath: imagePath,
         price: price,
         location: locData,
         userEmail: selectedProduct.userEmail,
@@ -257,11 +270,11 @@ class ProductsModel extends ConnectedProductsModel {
       _products[selectedProductIndex] = updatedProduct;
       notifyListeners();
       return true;
-    }).catchError((error) {
+    } catch (error) {
       _isLoading = false;
       notifyListeners();
       return false;
-    });
+    }
   }
 
   Future<bool> deleteProduct() {
