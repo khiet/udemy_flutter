@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -110,8 +111,18 @@ class _ProductFabState extends State<ProductFab>
                     _controller.reverse();
                   }
                 },
-                child: Icon(
-                  Icons.more_vert,
+                child: AnimatedBuilder(
+                  animation: _controller,
+                  builder: (BuildContext context, Widget child) {
+                    return Transform(
+                      alignment: FractionalOffset.center,
+                      transform:
+                          Matrix4.rotationZ(_controller.value * 0.5 * math.pi),
+                      child: Icon(_controller.isDismissed
+                          ? Icons.more_vert
+                          : Icons.close),
+                    );
+                  },
                 ),
               ),
             ),
