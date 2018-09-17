@@ -16,7 +16,20 @@ class ProductFab extends StatefulWidget {
   }
 }
 
-class _ProductFabState extends State<ProductFab> {
+class _ProductFabState extends State<ProductFab>
+    with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
@@ -28,21 +41,31 @@ class _ProductFabState extends State<ProductFab> {
               height: 70.0,
               width: 56.0,
               alignment: FractionalOffset.center,
-              child: FloatingActionButton(
-                backgroundColor: Theme.of(context).cardColor,
-                heroTag: 'contact',
-                mini: true,
-                onPressed: () async {
-                  final String url = 'mailto:${widget.product.userEmail}';
-                  if (await canLaunch(url)) {
-                    await launch(url);
-                  } else {
-                    throw 'Could not launch!';
-                  }
-                },
-                child: Icon(
-                  Icons.mail,
-                  color: Theme.of(context).primaryColor,
+              child: ScaleTransition(
+                scale: CurvedAnimation(
+                  parent: _controller,
+                  curve: Interval(
+                    0.0,
+                    1.0,
+                    curve: Curves.easeOut,
+                  ),
+                ),
+                child: FloatingActionButton(
+                  backgroundColor: Theme.of(context).cardColor,
+                  heroTag: 'contact',
+                  mini: true,
+                  onPressed: () async {
+                    final String url = 'mailto:${widget.product.userEmail}';
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch!';
+                    }
+                  },
+                  child: Icon(
+                    Icons.mail,
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
               ),
             ),
@@ -50,18 +73,28 @@ class _ProductFabState extends State<ProductFab> {
               height: 70.0,
               width: 56.0,
               alignment: FractionalOffset.center,
-              child: FloatingActionButton(
-                backgroundColor: Theme.of(context).cardColor,
-                heroTag: 'favourite',
-                mini: true,
-                onPressed: () {
-                  model.toggleProductFavouriteStatus();
-                },
-                child: Icon(
-                  model.selectedProduct.isFavourite
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color: Colors.red,
+              child: ScaleTransition(
+                scale: CurvedAnimation(
+                  parent: _controller,
+                  curve: Interval(
+                    0.0,
+                    0.5,
+                    curve: Curves.easeOut,
+                  ),
+                ),
+                child: FloatingActionButton(
+                  backgroundColor: Theme.of(context).cardColor,
+                  heroTag: 'favourite',
+                  mini: true,
+                  onPressed: () {
+                    model.toggleProductFavouriteStatus();
+                  },
+                  child: Icon(
+                    model.selectedProduct.isFavourite
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                    color: Colors.red,
+                  ),
                 ),
               ),
             ),
@@ -70,7 +103,13 @@ class _ProductFabState extends State<ProductFab> {
               width: 56.0,
               child: FloatingActionButton(
                 heroTag: 'options',
-                onPressed: () {},
+                onPressed: () {
+                  if (_controller.isDismissed) {
+                    _controller.forward();
+                  } else {
+                    _controller.reverse();
+                  }
+                },
                 child: Icon(
                   Icons.more_vert,
                 ),
