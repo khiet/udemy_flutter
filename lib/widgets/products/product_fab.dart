@@ -88,7 +88,7 @@ class _ProductFabState extends State<ProductFab>
                   heroTag: 'favourite',
                   mini: true,
                   onPressed: () {
-                    model.toggleProductFavouriteStatus();
+                    model.toggleProductFavouriteStatus(model.selectedProduct);
                   },
                   child: Icon(
                     model.selectedProduct.isFavourite

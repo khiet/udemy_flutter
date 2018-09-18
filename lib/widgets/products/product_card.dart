@@ -57,8 +57,7 @@ class ProductCard extends StatelessWidget {
               ),
               color: Colors.red,
               onPressed: () {
-                model.selectProduct(product.id);
-                model.toggleProductFavouriteStatus();
+                model.toggleProductFavouriteStatus(product);
               },
             ),
           ],
