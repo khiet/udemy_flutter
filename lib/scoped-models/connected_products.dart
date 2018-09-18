@@ -459,6 +459,7 @@ class UserModel extends ConnectedProductsModel {
     _authenticatedUser = null;
     _authTimer.cancel();
     _userSubject.add(false);
+    _selProductId = null;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('userEmail');
     prefs.remove('userId');
