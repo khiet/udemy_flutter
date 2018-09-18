@@ -12,11 +12,11 @@ import '../models/location.dart';
 class ProductEditPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _ProductCreatePageState();
+    return _ProductEditPageState();
   }
 }
 
-class _ProductCreatePageState extends State<ProductEditPage> {
+class _ProductEditPageState extends State<ProductEditPage> {
   final Map<String, dynamic> _formData = {
     'title': null,
     'description': null,
@@ -26,6 +26,9 @@ class _ProductCreatePageState extends State<ProductEditPage> {
   };
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _titleTextController = TextEditingController();
+  final _descriptionTextController = TextEditingController();
+  final _priceTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -114,10 +117,17 @@ class _ProductCreatePageState extends State<ProductEditPage> {
   }
 
   Widget _buildPriceTextField(Product product) {
+    if (product == null && _priceTextController.text.trim() == '') {
+      _priceTextController.text = '';
+    } else if (product != null && _priceTextController.text.trim() == '') {
+      _priceTextController.text = product.price.toString();
+    }
+
     return TextFormField(
+      controller: _priceTextController,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(labelText: 'Product Price'),
-      initialValue: product == null ? '' : product.price.toString(),
+      // initialValue: product == null ? '' : product.price.toString(),
       validator: (String value) {
         if (value.isEmpty ||
             !RegExp(r'^(?:[1-9]\d*|0)?(?:\.\d+)?$').hasMatch(value)) {
@@ -125,38 +135,53 @@ class _ProductCreatePageState extends State<ProductEditPage> {
         }
       },
       onSaved: (String value) {
-        _formData['price'] = double.parse(value);
+        //_formData['price'] = double.parse(value);
       },
     );
   }
 
   Widget _buildDescriptionTextField(Product product) {
+    if (product == null && _descriptionTextController.text.trim() == '') {
+      _descriptionTextController.text = '';
+    } else if (product != null &&
+        _descriptionTextController.text.trim() == '') {
+      _descriptionTextController.text = product.description;
+    }
+
     return TextFormField(
+      controller: _descriptionTextController,
       maxLines: 4,
       decoration: InputDecoration(labelText: 'Product Description'),
-      initialValue: product == null ? '' : product.description,
+      // initialValue: product == null ? '' : product.description,
       validator: (String value) {
         if (value.isEmpty || value.length < 10) {
           return 'Description is required and should be 10+ long.';
         }
       },
       onSaved: (String value) {
-        _formData['description'] = value;
+        //_formData['description'] = value;
       },
     );
   }
 
   Widget _buildTitleTextField(Product product) {
+    if (product == null && _titleTextController.text.trim() == '') {
+      _titleTextController.text = '';
+    } else if (product != null && _titleTextController.text.trim() == '') {
+      _titleTextController.text = product.title;
+    }
+
     return TextFormField(
+      controller: _titleTextController,
       decoration: InputDecoration(labelText: 'Product Title'),
-      initialValue: product == null ? '' : product.title,
+      // initialValue: product == null ? '' : product.title,
       validator: (String value) {
         if (value.isEmpty || value.length < 5) {
           return 'Title is required and should be 5+ long.';
         }
       },
       onSaved: (String value) {
-        _formData['title'] = value;
+        // _formData['title'] = value;
       },
     );
   }
@@ -179,9 +204,9 @@ class _ProductCreatePageState extends State<ProductEditPage> {
 
     if (selectedProductIndex == -1) {
       addProduct(
-        _formData['title'],
-        _formData['description'],
-        _formData['price'],
+        _titleTextController.text,
+        _descriptionTextController.text,
+        double.parse(_priceTextController.text),
         _formData['image'],
         _formData['location'],
       ).then((bool success) {
@@ -208,9 +233,9 @@ class _ProductCreatePageState extends State<ProductEditPage> {
       });
     } else {
       updateProduct(
-        _formData['title'],
-        _formData['description'],
-        _formData['price'],
+        _titleTextController.text,
+        _descriptionTextController.text,
+        double.parse(_priceTextController.text),
         _formData['image'],
         _formData['location'],
       ).then((_) {
