@@ -9,9 +9,8 @@ import '../../scoped-models/main.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
-  final int productIndex;
 
-  ProductCard(this.product, this.productIndex);
+  ProductCard(this.product);
 
   @override
   Widget build(BuildContext context) {
@@ -47,21 +46,18 @@ class ProductCard extends StatelessWidget {
               ),
               color: Theme.of(context).accentColor,
               onPressed: () {
-                model.selectProduct(model.allProducts[productIndex].id);
-                Navigator.pushNamed<bool>(context,
-                        '/product/' + model.allProducts[productIndex].id)
+                model.selectProduct(product.id);
+                Navigator.pushNamed<bool>(context, '/product/' + product.id)
                     .then((_) => model.selectProduct(null));
               },
             ),
             IconButton(
               icon: Icon(
-                model.allProducts[productIndex].isFavourite
-                    ? Icons.favorite
-                    : Icons.favorite_border,
+                product.isFavourite ? Icons.favorite : Icons.favorite_border,
               ),
               color: Colors.red,
               onPressed: () {
-                model.selectProduct(model.allProducts[productIndex].id);
+                model.selectProduct(product.id);
                 model.toggleProductFavouriteStatus();
               },
             ),
