@@ -27,6 +27,8 @@ class ProductPage extends StatelessWidget {
           slivers: <Widget>[
             SliverAppBar(
               expandedHeight: 256.0,
+              elevation:
+                  Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
                 title: Text(product.title),
