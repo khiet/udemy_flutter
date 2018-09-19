@@ -7,6 +7,7 @@ import 'package:location/location.dart' as geoloc;
 
 import '../../models/location.dart';
 import '../../models/product.dart';
+import '../../shared/global_config.dart';
 
 class LocationInput extends StatefulWidget {
   final Function setLocation;
@@ -45,10 +46,7 @@ class _LocationInputState extends State<LocationInput> {
     final Uri uri = Uri.https(
       'maps.googleapis.com',
       '/maps/api/geocode/json',
-      {
-        'latlng': '${lat.toString()},${lng.toString()}',
-        'key': 'AIzaSyDc72LQ1Qsa72z6Xg8dWb59aCg9_jEIqwA'
-      },
+      {'latlng': '${lat.toString()},${lng.toString()}', 'key': apiKey},
     );
 
     final http.Response response = await http.get(uri);
@@ -107,7 +105,7 @@ class _LocationInputState extends State<LocationInput> {
       final Uri uri = Uri.https(
         'maps.googleapis.com',
         '/maps/api/geocode/json',
-        {'address': address, 'key': 'AIzaSyDc72LQ1Qsa72z6Xg8dWb59aCg9_jEIqwA'},
+        {'address': address, 'key': apiKey},
       );
 
       final http.Response response = await http.get(uri);
@@ -129,8 +127,7 @@ class _LocationInputState extends State<LocationInput> {
       );
     }
 
-    final StaticMapProvider staticMapViewProvider =
-        StaticMapProvider('AIzaSyDc72LQ1Qsa72z6Xg8dWb59aCg9_jEIqwA');
+    final StaticMapProvider staticMapViewProvider = StaticMapProvider(apiKey);
 
     final Uri staticMapUri = staticMapViewProvider.getStaticUriWithMarkers(
       [

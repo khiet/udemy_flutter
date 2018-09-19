@@ -11,8 +11,10 @@ import './models/product.dart';
 
 import './helpers/custom_route.dart';
 
+import './shared/global_config.dart';
+
 void main() {
-  MapView.setApiKey("AIzaSyDc72LQ1Qsa72z6Xg8dWb59aCg9_jEIqwA");
+  MapView.setApiKey(apiKey);
   runApp(MyApp());
 }
 
